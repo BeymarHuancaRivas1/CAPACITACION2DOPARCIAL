@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block titulo %}{{ "Editar" if servicio else "Nuevo" }} servicio | Huellitas{% endblock %}
+
+{% block contenido %}
+<h2 class="mb-3">{{ "Editar servicio" if servicio else "Agregar nuevo servicio" }}</h2>
+
+<div class="card" style="max-width: 540px;">
+  <div class="card-body">
+    <form method="post">
+      <div class="mb-3">
+        <label for="nombre" class="form-label">Nombre del servicio</label>
+        <input type="text" class="form-control" id="nombre" name="nombre" required placeholder="Ej: Vacuna antirrábica"
+               value="{{ servicio.nombre if servicio }}">
+      </div>
+
+      <div class="mb-3">
+        <label for="precio" class="form-label">Precio (Bs.)</label>
+        <input type="number" class="form-control" id="precio" name="precio" required min="0" step="0.5"
+               value="{{ servicio.precio if servicio }}">
+      </div>
+
+      <div class="mb-3">
+        <label for="duracion_min" class="form-label">Duración aproximada (minutos)</label>
+        <input type="number" class="form-control" id="duracion_min" name="duracion_min" required min="5" step="5"
+               value="{{ servicio.duracion_min if servicio }}">
+      </div>
+
+      <button type="submit" class="btn btn-primary">{{ "Guardar cambios" if servicio else "Agregar servicio" }}</button>
+      <a href="{{ url_for('listar_servicios') }}" class="btn btn-secondary">Cancelar</a>
+    </form>
+  </div>
+</div>
+{% endblock %}
