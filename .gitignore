@@ -1,0 +1,17 @@
+
+venv/
+
+
+__pycache__/
+*.pyc
+
+
+*.db-wal
+*.db-shm
+*.db-journal
+
+
+temp.db
+
+
+.vscode/
