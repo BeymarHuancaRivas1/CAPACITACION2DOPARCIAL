@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block titulo %}Agendar cita | Huellitas{% endblock %}
+
+{% block contenido %}
+<h2 class="mb-3">Agendar una cita</h2>
+
+{% if not mascotas or not servicios %}
+  
+  <div class="alert alert-warning">
+    Para agendar una cita primero necesitas al menos una
+    <a href="{{ url_for('nueva_mascota') }}" class="alert-link">mascota</a> y un
+    <a href="{{ url_for('nuevo_servicio') }}" class="alert-link">servicio</a> registrados.
+  </div>
+{% else %}
+<div class="card" style="max-width: 540px;">
+  <div class="card-body">
+    <form method="post">
+      <div class="mb-3">
+        <label for="mascota_id" class="form-label">Mascota</label>
+        <select class="form-select" id="mascota_id" name="mascota_id" required>
+          {% for m in mascotas %}
+            <option value="{{ m.id }}">{{ m.nombre }} ({{ m.especie }}) - dueño: {{ m.dueno }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label for="servicio_id" class="form-label">Servicio</label>
+        <select class="form-select" id="servicio_id" name="servicio_id" required>
+          {% for s in servicios %}
+            <option value="{{ s.id }}">{{ s.nombre }} (Bs. {{ "%.2f"|format(s.precio) }})</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label for="fecha" class="form-label">Fecha y hora</label>
+        <input type="datetime-local" class="form-control" id="fecha" name="fecha" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="observacion" class="form-label">Observación (opcional)</label>
+        <textarea class="form-control" id="observacion" name="observacion" rows="3" placeholder="Ej: está un poco decaído desde ayer"></textarea>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Agendar cita</button>
+      <a href="{{ url_for('listar_citas') }}" class="btn btn-secondary">Volver</a>
+    </form>
+  </div>
+</div>
+{% endif %}
+{% endblock %}
