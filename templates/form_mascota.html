@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block titulo %}{{ "Editar" if mascota else "Nueva" }} mascota | Huellitas{% endblock %}
+
+{% block contenido %}
+
+<h2 class="mb-3">{{ "Editar a " ~ mascota.nombre if mascota else "Registrar nueva mascota" }}</h2>
+
+<div class="card" style="max-width: 540px;">
+  <div class="card-body">
+    <form method="post">
+      <div class="mb-3">
+        <label for="nombre" class="form-label">Nombre de la mascota</label>
+        <input type="text" class="form-control" id="nombre" name="nombre" required value="{{ mascota.nombre if mascota }}">
+      </div>
+
+      <div class="mb-3">
+        <label for="especie" class="form-label">Especie</label>
+        <select class="form-select" id="especie" name="especie" required>
+          {% for opcion in ["Perro", "Gato", "Conejo", "Ave", "Otro"] %}
+            <option {% if mascota and mascota.especie == opcion %}selected{% endif %}>{{ opcion }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label for="raza" class="form-label">Raza (opcional)</label>
+        <input type="text" class="form-control" id="raza" name="raza" value="{{ mascota.raza if mascota and mascota.raza }}">
+      </div>
+
+      <div class="mb-3">
+        <label for="dueno" class="form-label">Nombre del dueño</label>
+        <input type="text" class="form-control" id="dueno" name="dueno" required value="{{ mascota.dueno if mascota }}">
+      </div>
+
+      <div class="mb-3">
+        <label for="telefono" class="form-label">Teléfono de contacto</label>
+        <input type="tel" class="form-control" id="telefono" name="telefono" value="{{ mascota.telefono if mascota and mascota.telefono }}">
+      </div>
+
+      <button type="submit" class="btn btn-primary">{{ "Guardar cambios" if mascota else "Registrar mascota" }}</button>
+      <a href="{{ url_for('listar_mascotas') }}" class="btn btn-secondary">Cancelar</a>
+    </form>
+  </div>
+</div>
+{% endblock %}
